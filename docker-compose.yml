@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  rpgg-db:
+    image: mongo:latest # container image to be used
+    restart: always 
+    ports: # expose ports in “host:container” format
+      - 27017:27017
+    environment: #env variables to pass into the container
+       MONGODB_DATABASE: rpgg-database
+    volumes:
+      - rpgg-db_data:/data/db/
+
+  rpgg-nest-app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    # Run in Debug Mode: npm run start:debug --> Don't forget to start your vscode debugger!
+    # Run in dev Mode: npm run start:dev  
+    command: npm run start:dev
+    depends_on:
+      - rpgg-db
+    ports:
+      - "3007:3007"
+    environment:
+      DATABASE_URL: mongodb://rpgg-db:27017/rpgg
+    volumes: 
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  rpgg-db_data:
