@@ -1,9 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { FilterQuery, MongooseQueryOptions } from 'mongoose';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
@@ -22,11 +21,6 @@ export class UsersController {
   @Get(':id')
   findOneById(@Param('id') id: string) {
     return this.usersService.findOneById(id);
-  }
-
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
   }
 
   @Post('find-one')

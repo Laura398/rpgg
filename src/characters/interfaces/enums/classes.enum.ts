@@ -1,0 +1,16 @@
+export enum Classes {
+    ASSASSIN = 'Assassin-Voleur',
+    ADVENTURER = 'Aventurier',
+    BARBARIAN = 'Barbare',
+    BERSERKER = 'Bersherker',
+    RIDER = 'Cavalier',
+    HUNTER = 'Chasseur',
+    DRUID = 'Druide',
+    WARRIOR = 'Guerrier',
+    MAGE = 'Mage',
+    MERCENARY = 'Mercenaire',
+    MONK = 'Moine',
+    PALADIN = 'Paladin',
+    PRIEST = 'Prêtre',
+    WIZARD = 'Sorcier',
+}

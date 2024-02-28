@@ -4,10 +4,21 @@ import { LoginDto } from './dto/login.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { Response } from 'express';
 import { RequestType } from 'src/interfaces/types';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { UsersService } from 'src/users/users.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService,
+  ) {}
+
+  @HttpCode(HttpStatus.CREATED)
+  @Post('register')
+  async register(@Body() registerUserDto: CreateUserDto) {
+    return this.usersService.create(registerUserDto);
+  }
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
