@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 
@@ -6,10 +7,11 @@ import { UsersService } from 'src/users/users.service';
 export class AuthService {
     constructor(
         private usersService: UsersService,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+        private configService: ConfigService
     ) {}
 
-    async login(email: string, password: string): Promise<{ access_token: string }> {
+    async login(email: string, password: string): Promise<{ accessToken: string, refreshToken: string }> {
         const user = await this.usersService.findOne({ email })
         if (user && user.password === password) {
             const payload = { sub: user._id, username: user.username };
@@ -17,9 +19,15 @@ export class AuthService {
 
             try {
                 const accessToken = await this.jwtService.signAsync(payload)
-                console.log("accessToken : ", accessToken);
+
+                const refreshToken = await this.jwtService.signAsync(payload, {
+                    secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
+                    expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION')
+                })
+
                 return {
-                    access_token: accessToken
+                    accessToken: accessToken,
+                    refreshToken: refreshToken
                 }
             } catch (error) {
                 new BadRequestException("error : ", error);
@@ -31,12 +39,21 @@ export class AuthService {
         return null;
     }
 
-    logout(request: any): string {
-        console.log("request : ", request.user);
-        
-        if (request.user) {
-            return `User with ${request.user.username} has been logged out`;
-        }
-        return 'No token found in the request';
+    async refresh(refreshToken: string) {
+        const payload = this.jwtService.verify(refreshToken, {
+            secret: process.env.JWT_REFRESH_TOKEN_SECRET,
+        });
+
+        const accessToken = await this.jwtService.signAsync(payload)
+
+        const newRefreshToken = await this.jwtService.signAsync(payload, {
+            secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
+            expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION')
+        })
+
+        return {
+            accessToken,
+            refreshToken: newRefreshToken,
+        };
     }
 }

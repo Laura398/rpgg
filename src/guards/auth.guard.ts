@@ -1,12 +1,12 @@
 import {
-    CanActivate,
-    ExecutionContext,
-    Injectable,
-    UnauthorizedException,
-  } from '@nestjs/common';
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-  import { JwtService } from '@nestjs/jwt';
-  import { Request } from 'express';
+import { JwtService } from '@nestjs/jwt';
+import { Request } from 'express';
   
   @Injectable()
   export class AuthGuard implements CanActivate {
@@ -27,9 +27,7 @@ import { ConfigService } from '@nestjs/config';
           {
             secret: this.configService.get<string>('JWT_ACCESS_TOKEN_SECRET'),
           }
-        );
-        console.log("payload : ", payload);
-        
+        );        
         // 💡 We're assigning the payload to the request object here
         // so that we can access it in our route handlers
         request['user'] = payload;
@@ -40,7 +38,7 @@ import { ConfigService } from '@nestjs/config';
     }
   
     private extractTokenFromHeader(request: Request): string | undefined {
-      const [type, token] = request.headers.authorization?.split(' ') ?? [];
+      const [type, token] = request.cookies.Authorization?.split(' ') ?? [];
       return type === 'Bearer' ? token : undefined;
     }
   }
