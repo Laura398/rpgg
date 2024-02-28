@@ -1,7 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
+import bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
@@ -11,49 +12,75 @@ export class AuthService {
         private configService: ConfigService
     ) {}
 
-    async login(email: string, password: string): Promise<{ accessToken: string, refreshToken: string }> {
+    async login(email: string, password: string): Promise<{ accessToken: string, refreshToken: string }> {        
         const user = await this.usersService.findOne({ email })
-        if (user && user.password === password) {
-            const payload = { sub: user._id, username: user.username };
-            console.log("payload : ", payload);
-
-            try {
-                const accessToken = await this.jwtService.signAsync(payload)
-
-                const refreshToken = await this.jwtService.signAsync(payload, {
-                    secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
-                    expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION')
-                })
-
-                return {
-                    accessToken: accessToken,
-                    refreshToken: refreshToken
-                }
-            } catch (error) {
-                new BadRequestException("error : ", error);
-                console.log("error : ", error);
-            } 
-            
-            
+        if (!user) {
+            throw new UnauthorizedException();
         }
-        return null;
+        
+        const validUser = await this.validateUser(email, password);
+        if (!validUser) {
+            throw new UnauthorizedException();
+        }
+        const payload = { sub: user._id, username: user.username };
+
+        const accessToken = await this.jwtService.signAsync(payload)
+        if (!accessToken) {
+            throw new BadRequestException();
+        }
+        
+        const refreshToken = await this.jwtService.signAsync(payload, {
+            secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
+            expiresIn: `${this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION_TIME')}s`
+        })
+        if (!refreshToken) {
+            throw new BadRequestException();
+        }
+
+        return {
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        }
     }
 
     async refresh(refreshToken: string) {
         const payload = this.jwtService.verify(refreshToken, {
-            secret: process.env.JWT_REFRESH_TOKEN_SECRET,
-        });
-
-        const accessToken = await this.jwtService.signAsync(payload)
-
-        const newRefreshToken = await this.jwtService.signAsync(payload, {
             secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
-            expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION')
+        });
+        if (!payload) {
+            throw new UnauthorizedException();
+        }
+        const newPayload = { sub: payload.sub, username: payload.username };
+        const accessToken = await this.jwtService.signAsync(newPayload)
+        if (!accessToken) {
+            throw new BadRequestException();
+        }
+        console.log("accessToken: ", accessToken);
+        
+        const newRefreshToken = await this.jwtService.signAsync(newPayload, {
+            secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
+            expiresIn: `${this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION_TIME')}s`
         })
+        if (!newRefreshToken) {
+            throw new BadRequestException();
+        }
 
         return {
-            accessToken,
+            accessToken: accessToken,
             refreshToken: newRefreshToken,
         };
     }
+
+    async validateUser(email: string, loginPassword: string): Promise<any> {
+        const user = await this.usersService.findOne({email});     
+        if (!user) {
+            return null;
+        }   
+        const validPassword = await bcrypt.compare(loginPassword, user.password);
+        if (!validPassword) {
+            return null;
+        }
+        const { password, ...result } = user;
+          return result;
+      }
 }

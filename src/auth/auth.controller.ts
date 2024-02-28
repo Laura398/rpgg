@@ -23,7 +23,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Res({ passthrough: true }) res: Response, @Body() loginDto: LoginDto) {
-    const tokens = await this.authService.login(loginDto.email, loginDto.password);
+    const tokens = await this.authService.login(loginDto.email, loginDto.password);    
     res.cookie('Authorization', `Bearer ${tokens.accessToken}`, { httpOnly: true });
     res.cookie('Refresh', tokens.refreshToken, { httpOnly: true });
     return tokens;
@@ -37,11 +37,12 @@ export class AuthController {
     res.clearCookie('Refresh');
   }
 
-  @Post('refresh-token')
+  @UseGuards(AuthGuard)
+  @Get('refresh-token')
   @HttpCode(HttpStatus.OK)
   async refresh(@Request() req: RequestType, @Res({ passthrough: true }) res: Response) {
-    const refreshToken = req.cookies['Refresh'];
-    const newTokens = await this.authService.refresh(refreshToken);
+    const refreshToken = req.cookies['Refresh'];    
+    const newTokens = await this.authService.refresh(refreshToken);    
     res.cookie('Authorization', `Bearer ${newTokens.accessToken}`, { httpOnly: true });
     res.cookie('Refresh', newTokens.refreshToken, { httpOnly: true });
     return newTokens;

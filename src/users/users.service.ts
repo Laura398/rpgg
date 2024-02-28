@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { FilterQuery, Model, MongooseQueryOptions } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { InjectModel } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
-import { FilterQuery, Model, Mongoose, MongooseQueryMiddleware, MongooseQueryOptions } from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
@@ -27,8 +28,19 @@ export class UsersService {
     return await this.userModel.findOne(selector, options).exec();
   }
 
-  create(createUserDto: CreateUserDto) {
-    return new this.userModel(createUserDto).save();
+  async create(createUserDto: CreateUserDto) {
+    try {
+      const {password} = createUserDto;
+
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(password, salt);
+  
+      const savedUser = await new this.userModel({...createUserDto, password: hashedPassword}).save();
+      delete savedUser.password;
+      return savedUser;
+    } catch (error) {
+      return new BadRequestException("error : ", error);
+    }
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {

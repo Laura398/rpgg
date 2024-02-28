@@ -1,5 +1,6 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, now } from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 @Schema()
 export class User extends Document {
@@ -17,11 +18,6 @@ export class User extends Document {
 
     @Prop({default: now()})
     updatedAt: Date;
-
-    // if relation is needed
-    // inside the class definition
-    // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-    // user: User;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
