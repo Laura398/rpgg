@@ -1,6 +1,5 @@
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, now } from 'mongoose';
-import bcrypt from 'bcryptjs';
 
 @Schema()
 export class User extends Document {

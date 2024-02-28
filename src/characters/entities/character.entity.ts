@@ -66,77 +66,99 @@ export class Character extends Document {
     @IsEnum(FamilySituation)
     familySituation?: FamilySituation;
 
-    @Prop()
+    @Prop({ type: Object, default: {
+        hp: 10,
+        mp: 10,
+        level: 1,
+        atk: 1,
+        def: 1
+    }})
     mainStats = {
-        hp: {type: Number, default: 10, min: 0, max: 100},
-        mp: {type: Number, default: 10, min: 0, max: 100},
-        level: {type: Number, default: 1, min: 1, max: 100},
-        atk: {type: Number, default: 1, min: 0, max: 100},
-        def: {type: Number, default: 1, min: 0, max: 100}, 
+        hp: {type: Number, min: 0, max: 100},
+        mp: {type: Number, min: 0, max: 100},
+        level: {type: Number, min: 1, max: 100},
+        atk: {type: Number, min: 0, max: 100},
+        def: {type: Number, min: 0, max: 100}, 
     }
 
-    @Prop()
+    @Prop({ type: Object, default: {
+        phy: 1,
+        int: 1,
+        dxt: 1,
+        men: 1,
+        cha: 1
+    }})
     secondaryStats = {
-        phy: {type: Number, default: 1, min: 0, max: 100},
-        int: {type: Number, default: 1, min: 0, max: 100},
-        dxt: {type: Number, default: 1, min: 0, max: 100},
-        men: {type: Number, default: 1, min: 0, max: 100},
-        cha: {type: Number, default: 1, min: 0, max: 100},
+        phy: {type: Number, min: 0, max: 100},
+        int: {type: Number, min: 0, max: 100},
+        dxt: {type: Number, min: 0, max: 100},
+        men: {type: Number, min: 0, max: 100},
+        cha: {type: Number, min: 0, max: 100},
     }
 
-    @Prop({ nullable: true })
+    @Prop({ nullable: true, type: Object })
     talent? = {
         name: {type: String},
         skills: [{type: typeof PartialType<ArtType & KnowledgeType & IntellectType & PhysicalType & SocialType & SurvivalType>}],
     }
 
-    @Prop({ nullable: true })
+    @Prop({ nullable: true, type: Object })
     weakness? = {
         name: {type: String},
         skills: [{type: typeof PartialType<ArtType & KnowledgeType & IntellectType & PhysicalType & SocialType & SurvivalType>}],
     }
 
-    @Prop({ nullable: true })
+    @Prop({ nullable: true, type: [Object] })
     special? = [{
         name: {type: String},
         talent: [{type: typeof PartialType<ArtType & KnowledgeType & IntellectType & PhysicalType & SocialType & SurvivalType>}],
         stat: {type: 'phy' || 'int' || 'dxt' || 'men' || 'cha' },
     }]
 
-    @Prop({ nullable: true })
+    @Prop({ nullable: true, type: Object })
     skills?: TalentsType;
 
-    @Prop({ nullable: true })
+    @Prop({ nullable: true, type: Object })
     languages?: Languages;
 
     @Prop({ default: 0, min: -10, max: 10})
     karma?: number;
 
-    @Prop()
+    @Prop({ type: Object, default: {
+        humanity: 0,
+        honesty: 0,
+        honor: 0,
+        humility: 0,
+        heroism: 0
+    }})
     principles = {
-        humanity: {type: Number, default: 0, min: -10, max: 10},
-        honesty: {type: Number, default: 0, min: -10, max: 10},
-        honor: {type: Number, default: 0, min: -10, max: 10},
-        humility: {type: Number, default: 0, min: -10, max: 10},
-        heroism: {type: Number, default: 0, min: -10, max: 10}
+        humanity: {type: Number, min: -10, max: 10},
+        honesty: {type: Number, min: -10, max: 10},
+        honor: {type: Number, min: -10, max: 10},
+        humility: {type: Number, min: -10, max: 10},
+        heroism: {type: Number, min: -10, max: 10}
     };
 
     @Prop({ nullable: true, min: 1, max: 20 })
     reputation?: number;
 
-    @Prop({ nullable: true })
+    @Prop({ nullable: true, type: Object })
     renown = {
-        nobility: {type: Number, default: 0, min: -10, max: 10},
-        religion: {type: Number, default: 0, min: -10, max: 10},
-        bourgeoisie: {type: Number, default: 0, min: -10, max: 10},
-        common: {type: Number, default: 0, min: -10, max: 10},
+        nobility: {type: Number, min: -10, max: 10},
+        religion: {type: Number, min: -10, max: 10},
+        bourgeoisie: {type: Number, min: -10, max: 10},
+        common: {type: Number, min: -10, max: 10},
     };
 
-    @Prop()
+    @Prop({ type: Object, default: {
+        gold: 0,
+        silver: 0,
+        copper: 0
+    }})
     money = {
-        gold: {type: Number, default: 0, min: 0},
-        silver: {type: Number, default: 0, min: 0},
-        copper: {type: Number, default: 0, min: 0},
+        gold: {type: Number, min: 0},
+        silver: {type: Number, min: 0},
+        copper: {type: Number, min: 0},
     }
 
     @Prop({ nullable: true })
