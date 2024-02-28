@@ -4,6 +4,7 @@ import { UpdateCharacterDto } from './dto/update-character.dto';
 import { Character } from './entities/character.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { RequestType } from 'src/interfaces/types';
 
 @Injectable()
 export class CharactersService {
@@ -27,17 +28,28 @@ export class CharactersService {
     return await this.characterModel.findOne(selector, options).exec();
   }
 
-  create(createCharacterDto: CreateCharacterDto) {
+  create(request: any, createCharacterDto: CreateCharacterDto) {
     console.log("createCharacterDto :>> ", createCharacterDto);
+    console.log("request :>> ", request);
     
-    return 'This action adds a new character';
+    const userId = request.user.sub;
+    if (!userId) {
+      throw new Error("User not found");
+    }
+    console.log("userId :>> ", userId);
+    
+    return new this.characterModel({...createCharacterDto, userId}).save();
   }
 
   update(id: string, updateCharacterDto: UpdateCharacterDto) {
     return `This action updates a #${id} character`;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} character`;
+  async remove(id: string) {
+    return await this.characterModel.findByIdAndDelete({ _id: id }).exec();
+  }
+
+  async deleteAll() {
+    return await this.characterModel.deleteMany({}).exec();
   }
 }

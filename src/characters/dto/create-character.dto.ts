@@ -1,10 +1,11 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsObject, IsOptional, IsString } from "class-validator";
+import { IsArray, IsEnum, IsNotEmpty, IsNumber, IsObject, IsOptional, IsString } from "class-validator";
 import { CharacterType, Race } from "../interfaces/enums/races.enum";
 import { Alignments } from "../interfaces/enums/alignments.enum";
 import { Genre, Sexuality } from "../interfaces/enums/enums";
 import { Contries, FamilySituation, SocialStatus } from "../interfaces/enums/contries.enum";
-import { TalentsType } from "../interfaces/types/talents.type";
 import { Languages } from "../interfaces/types/languages.type";
+import { MainStatsType, MoneyType, PrinciplesType, RenownType, SecondaryStatsType, SpecialType, TalentsAndWeaknessType, WeaponsAndArmorType } from "../interfaces/types/types";
+import { TalentsType } from "../interfaces/types/talents.type";
 
 export class CreateCharacterDto {
     @IsString()
@@ -71,47 +72,25 @@ export class CreateCharacterDto {
     @IsOptional()
     familySituation?: FamilySituation;
 
-    @IsObject()
+    @IsObject({})
     @IsOptional()
-    mainStats? = {
-        hp: Number,
-        mp: Number,
-        level: Number,
-        atk: Number,
-        def: Number,
-    }
+    mainStats?: MainStatsType;
 
     @IsObject()
     @IsOptional()
-    secondaryStats? = {
-        phy: Number,
-        int: Number,
-        dxt: Number,
-        men: Number,
-        cha: Number,
-    }
+    secondaryStats?: SecondaryStatsType;
 
     @IsObject()
     @IsOptional()
-    talent? = [{
-        name: String,
-        skills: [String]
-    }]
+    talent?: TalentsAndWeaknessType;
 
     @IsObject()
     @IsOptional()
-    weakness? = {
-        name: String,
-        skills: [String]
-    }
+    weakness?: TalentsAndWeaknessType;
 
-    @IsObject()
+    @IsArray()
     @IsOptional()
-    special? = [{
-        name: String,
-        talent: [String],
-        stat: 'phy' || 'int' || 'dxt' || 'men' || 'cha',
-    }]
+    special?: SpecialType;
 
     @IsObject()
     @IsOptional()
@@ -127,13 +106,7 @@ export class CreateCharacterDto {
 
     @IsObject()
     @IsOptional()
-    principles? = {
-        humanity: Number,
-        honesty: Number,
-        honor: Number,
-        humility: Number,
-        heroism: Number
-    }
+    principles?: PrinciplesType;
 
     @IsNumber()
     @IsOptional()
@@ -141,20 +114,11 @@ export class CreateCharacterDto {
 
     @IsObject()
     @IsOptional()
-    renown? = {
-        nobility: Number,
-        religion: Number,
-        bourgeoisie: Number,
-        common: Number,
-    };
+    renown?: RenownType;
 
     @IsObject()
     @IsOptional()
-    money? = {
-        gold: Number,
-        silver: Number,
-        copper: Number,
-    }
+    money?: MoneyType;
 
     @IsObject()
     @IsOptional()
@@ -162,21 +126,11 @@ export class CreateCharacterDto {
 
     @IsObject()
     @IsOptional()
-    weapons?: [{
-        name?: String,
-        atk?: Number,
-        weight?: 'light' | 'medium' | 'heavy',
-        type?: 'melee' | 'range' | 'magic',
-    }];
+    weapons?: WeaponsAndArmorType;
 
     @IsObject()
     @IsOptional()
-    armors?: [{
-        name?: String,
-        def?: Number,
-        weight?: 'light' | 'medium' | 'heavy',
-        type?: 'melee' | 'range' | 'magic',
-    }];
+    armors?: WeaponsAndArmorType;
 
     @IsString()
     @IsOptional()

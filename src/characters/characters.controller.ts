@@ -11,12 +11,6 @@ import { RequestType } from 'src/interfaces/types';
 export class CharactersController {
   constructor(private readonly charactersService: CharactersService) {}
 
-  @UseGuards(AuthGuard)
-  @Post()
-  create(@Body() createCharacterDto: CreateCharacterDto) {
-    return this.charactersService.create(createCharacterDto);
-  }
-
   @Get()
   findAll() {
     return this.charactersService.findAll();
@@ -45,14 +39,26 @@ export class CharactersController {
   }
 
   @UseGuards(AuthGuard)
+  @Post()
+  create(@Request() request: RequestType, @Body() createCharacterDto: CreateCharacterDto) {
+    return this.charactersService.create(request, createCharacterDto);
+  }
+
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCharacterDto: UpdateCharacterDto) {
     return this.charactersService.update(id, updateCharacterDto);
   }
-
+  
   @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.charactersService.remove(id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete()
+  deleteAll() {
+    return this.charactersService.deleteAll();
   }
 }
