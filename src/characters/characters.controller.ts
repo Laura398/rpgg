@@ -47,8 +47,6 @@ export class CharactersController {
   @UseGuards(AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCharacterDto: UpdateCharacterDto) {
-    console.log("updateCharacterDto :>> ", updateCharacterDto);
-    
     return this.charactersService.update(id, updateCharacterDto);
   }
   
