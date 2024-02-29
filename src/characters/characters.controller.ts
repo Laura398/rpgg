@@ -28,6 +28,12 @@ export class CharactersController {
     return this.charactersService.findMany(selector, options);
   }
 
+  @UseGuards(AuthGuard)
+  @Get('random')
+  randomize(@Request() request: RequestType) {
+    return this.charactersService.randomize(request);
+  }
+
   @Get(':id')
   findOneById(@Param('id') id: string) {
     return this.charactersService.findOneById(id);

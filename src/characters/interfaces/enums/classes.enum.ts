@@ -2,7 +2,7 @@ export enum Classes {
     ASSASSIN = 'Assassin-Voleur',
     ADVENTURER = 'Aventurier',
     BARBARIAN = 'Barbare',
-    BERSERKER = 'Bersherker',
+    BERSERKER = 'Berserker',
     RIDER = 'Cavalier',
     HUNTER = 'Chasseur',
     DRUID = 'Druide',

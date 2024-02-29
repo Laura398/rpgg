@@ -9,18 +9,24 @@ export enum Race {
     HALFLING = 'Demi-Divitiné',
 }
 
-export enum LutinType {
+export enum LutinMaleType {
     DAYGNOME = 'Gnome du jour',
-    NIGHTGNOME = 'Gnome de la nuit',
+    NIGHTGNOME = 'Gnome de la nuit'
+}
+
+export enum LutinFemaleType {
     SUMMERFAIRY = 'Fée de l\'été',
     WINTERFAIRY = 'Fée de l\'hiver',
     SPRINGFAIRY = 'Fée du printemps',
     AUTUMNFAIRY = 'Fée de l\'automne',
 }
 
+export enum LutinType {
+    LutinMaleType,
+    LutinFemaleType,
+}
+
 export enum HalflingType {
     ANGEL = 'Demi-Ange',
     DEMON = 'Demi-Démon',
 }
-
-export type CharacterType = LutinType | HalflingType | string;

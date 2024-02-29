@@ -3,11 +3,12 @@ import { IsEnum } from 'class-validator';
 import mongoose, { Document, now } from 'mongoose';
 import { Alignments } from '../interfaces/enums/alignments.enum';
 import { Contries, FamilySituation, SocialStatus } from '../interfaces/enums/contries.enum';
-import { Genre, Sexuality } from '../interfaces/enums/enums';
-import { CharacterType, Race } from '../interfaces/enums/races.enum';
+import { Gender, Sexuality } from '../interfaces/enums/enums';
+import { Race } from '../interfaces/enums/races.enum';
 import { Languages } from '../interfaces/types/languages.type';
 import { TalentsType } from '../interfaces/types/talents.type';
 import { RenownType, SpecialType, TalentsAndWeaknessType, WeaponsAndArmorType } from '../interfaces/types/types';
+import { Classes } from '../interfaces/enums/classes.enum';
 
 @Schema()
 export class Character extends Document {
@@ -25,15 +26,18 @@ export class Character extends Document {
     race?: Race;
 
     @Prop()
-    type?: CharacterType;
+    type?: string;
+
+    @Prop(Classes)
+    class?: Classes;
 
     @Prop()
     @IsEnum(Alignments)
     alignment?: Alignments;
 
     @Prop()
-    @IsEnum(Genre)
-    genre?: Genre;
+    @IsEnum(Gender)
+    gender?: Gender;
 
     @Prop()
     @IsEnum(Sexuality)
@@ -103,11 +107,11 @@ export class Character extends Document {
     karma?: number;
 
     @Prop(raw({
-        humanity: { type: Number, default: 0},
-        honesty: { type: Number, default: 0},
-        honor: { type: Number, default: 0},
-        humility: { type: Number, default: 0},
-        heroism: { type: Number, default: 0},
+        humanity: { type: Number, default: 0, min: -10, max: 10},
+        honesty: { type: Number, default: 0, min: -10, max: 10},
+        honor: { type: Number, default: 0, min: -10, max: 10},
+        humility: { type: Number, default: 0, min: -10, max: 10},
+        heroism: { type: Number, default: 0, min: -10, max: 10},
     }))
     principles: Record<number, any>;
 

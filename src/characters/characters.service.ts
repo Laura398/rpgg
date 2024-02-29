@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { Character } from './entities/character.entity';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { RequestType } from 'src/interfaces/types';
+import { randomizeCharacter } from './helpers/randomize/randomize-character';
 
 @Injectable()
 export class CharactersService {
@@ -39,6 +39,11 @@ export class CharactersService {
     console.log("userId :>> ", userId);
     
     return new this.characterModel({...createCharacterDto, user: userId}).save();
+  }
+
+  randomize(request: any) {
+    const userId = request.user.sub;
+    return randomizeCharacter(userId);
   }
 
   async update(id: string, updateCharacterDto: UpdateCharacterDto) {

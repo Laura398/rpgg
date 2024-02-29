@@ -1,11 +1,12 @@
 import { IsArray, IsEnum, IsNotEmpty, IsNumber, IsObject, IsOptional, IsString } from "class-validator";
-import { CharacterType, Race } from "../interfaces/enums/races.enum";
 import { Alignments } from "../interfaces/enums/alignments.enum";
-import { Genre, Sexuality } from "../interfaces/enums/enums";
 import { Contries, FamilySituation, SocialStatus } from "../interfaces/enums/contries.enum";
+import { Gender, Sexuality } from "../interfaces/enums/enums";
+import { Race } from "../interfaces/enums/races.enum";
 import { Languages } from "../interfaces/types/languages.type";
-import { MainStatsType, MoneyType, PrinciplesType, RenownType, SecondaryStatsType, SpecialType, TalentsAndWeaknessType, WeaponsAndArmorType } from "../interfaces/types/types";
 import { TalentsType } from "../interfaces/types/talents.type";
+import { MainStatsType, MoneyType, PrinciplesType, RenownType, SecondaryStatsType, SpecialType, TalentsAndWeaknessType, WeaponsAndArmorType } from "../interfaces/types/types";
+import { Classes } from "../interfaces/enums/classes.enum";
 
 export class CreateCharacterDto {
     @IsString()
@@ -26,15 +27,19 @@ export class CreateCharacterDto {
 
     @IsString()
     @IsOptional()
-    type?: CharacterType;
+    type?: string;
+
+    @IsEnum(Classes)
+    @IsOptional()
+    class?: Classes;
 
     @IsEnum(Alignments)
     @IsOptional()
     alignment?: Alignments;
 
-    @IsEnum(Genre)
+    @IsEnum(Gender)
     @IsOptional()
-    genre?: Genre;
+    gender?: Gender;
 
     @IsEnum(Sexuality)
     @IsOptional()

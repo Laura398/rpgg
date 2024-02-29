@@ -1,4 +1,3 @@
-import { PartialType } from "@nestjs/mapped-types"
 import { Art, Intellect, Knowledge, Physical, Social, Survival } from "../enums/talents.enum"
 
 export type ArtType = {

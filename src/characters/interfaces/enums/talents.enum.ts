@@ -1,4 +1,3 @@
-import { PartialType } from "@nestjs/mapped-types"
 
 export enum Art {
     AGRI_ANI = 'Agriculture et Elevage',
