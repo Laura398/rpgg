@@ -9,7 +9,7 @@ import { defineSecondaryStats } from "./define-stats/define-secondary-stats";
 import { defineSkills } from "./define-skills/define-skills";
 import { defineLanguages } from "./define-skills/define-languages";
 
-export const randomizeCharacter = (userId: string) => {
+export const randomizeCharacter = () => {
     const firstname = FIRSTNAMES[Math.floor(Math.random() * FIRSTNAMES.length)];
     const lastname = LASTNAMES[Math.floor(Math.random() * LASTNAMES.length)];
     const gender = GENDERS[Math.floor(Math.random() * GENDERS.length)]
@@ -47,6 +47,19 @@ export const randomizeCharacter = (userId: string) => {
         heroism: Math.floor(Math.random() * 20) - 10,
     }
 
+    const renown = {
+        nobility: Math.floor(Math.random() * 20) - 10,
+        religion: Math.floor(Math.random() * 20) - 10,
+        bourgeoisie: Math.floor(Math.random() * 20) - 10,
+        common: Math.floor(Math.random() * 20) - 10,
+    }
+
+    const money = {
+        gold: Math.floor(Math.random() * 100) + 1,
+        silver: Math.floor(Math.random() * 100) + 1,
+        copper: Math.floor(Math.random() * 100) + 1,
+    }
+
     const newCharacter: any = {
         firstname,
         lastname,
@@ -69,7 +82,9 @@ export const randomizeCharacter = (userId: string) => {
         languages,
         karma: 0,
         principles,
-        userId
+        reputation: Math.floor(Math.random() * 20) + 1,
+        renown,
+        money,
     }
     
     if (type) {

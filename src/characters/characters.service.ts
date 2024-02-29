@@ -29,21 +29,17 @@ export class CharactersService {
   }
 
   create(request: any, createCharacterDto: CreateCharacterDto) {
-    console.log("createCharacterDto :>> ", createCharacterDto);
-    console.log("request :>> ", request);
-    
     const userId = request.user.sub;
     if (!userId) {
       throw new Error("User not found");
     }
-    console.log("userId :>> ", userId);
-    
     return new this.characterModel({...createCharacterDto, user: userId}).save();
   }
 
   randomize(request: any) {
     const userId = request.user.sub;
-    return randomizeCharacter(userId);
+    const newCharacter = randomizeCharacter();
+    return new this.characterModel({...newCharacter, user: userId}).save();
   }
 
   async update(id: string, updateCharacterDto: UpdateCharacterDto) {
