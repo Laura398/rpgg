@@ -1,13 +1,13 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IsEnum, IsObject } from 'class-validator';
-import { Document, now } from 'mongoose';
+import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
+import { IsEnum } from 'class-validator';
+import mongoose, { Document, now } from 'mongoose';
 import { Alignments } from '../interfaces/enums/alignments.enum';
 import { Contries, FamilySituation, SocialStatus } from '../interfaces/enums/contries.enum';
 import { Genre, Sexuality } from '../interfaces/enums/enums';
 import { CharacterType, Race } from '../interfaces/enums/races.enum';
 import { Languages } from '../interfaces/types/languages.type';
 import { TalentsType } from '../interfaces/types/talents.type';
-import { MainStatsType, MoneyType, PrinciplesType, RenownType, SecondaryStatsType, SpecialType, TalentsAndWeaknessType, WeaponsAndArmorType } from '../interfaces/types/types';
+import { RenownType, SpecialType, TalentsAndWeaknessType, WeaponsAndArmorType } from '../interfaces/types/types';
 
 @Schema()
 export class Character extends Document {
@@ -66,13 +66,23 @@ export class Character extends Document {
     @IsEnum(FamilySituation)
     familySituation?: FamilySituation;
 
-    @Prop({ type: Object })
-    @IsObject()
-    mainStats?: MainStatsType;
+    @Prop(raw({
+        hp: { type: Number, default: 10, optional: true},
+        mp: { type: Number, default: 10, optional: true},
+        level: { type: Number, default: 5, optional: true},
+        atk: { type: Number, default: 10, optional: true},
+        def: { type: Number, default: 10, optional: true},
+    }))
+    mainStats: Record<number, any>;
 
-    @Prop({ type: Object })
-    @IsObject()
-    secondaryStats?: SecondaryStatsType;
+    @Prop(raw({
+        phy: { type: Number, default: 10},
+        int: { type: Number, default: 10},
+        dxt: { type: Number, default: 10},
+        men: { type: Number, default: 10},
+        cha: { type: Number, default: 10},
+    }))
+    secondaryStats: Record<number, any>;
 
     @Prop({ type: Object })
     talent?: TalentsAndWeaknessType;
@@ -92,21 +102,27 @@ export class Character extends Document {
     @Prop({ default: 0, min: -10, max: 10})
     karma?: number;
 
-    @Prop({ type: Object })
-    principles?: PrinciplesType;
+    @Prop(raw({
+        humanity: { type: Number, default: 0},
+        honesty: { type: Number, default: 0},
+        honor: { type: Number, default: 0},
+        humility: { type: Number, default: 0},
+        heroism: { type: Number, default: 0},
+    }))
+    principles: Record<number, any>;
 
-    @Prop({ min: 1, max: 20 })
+    @Prop({ min: 1, max: 20, default: 1 })
     reputation?: number;
 
     @Prop({ type: Object })
     renown?: RenownType;
 
-    @Prop({ type: Object, default: {
-        gold: 0,
-        silver: 0,
-        copper: 0
-    }})
-    money?: MoneyType;
+    @Prop(raw({
+        gold: { type: Number, default: 0},
+        silver: { type: Number, default: 0},
+        copper: { type: Number, default: 0},
+    }))
+    money: Record<number, any>;
 
     @Prop({ type: Array })
     inventory?: string[];
@@ -120,8 +136,8 @@ export class Character extends Document {
     @Prop()
     mount?: string;
 
-    @Prop({ required: true })
-    userId: string;
+    @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+    user: string;
 
     @Prop({default: now()})
     createdAt: Date;

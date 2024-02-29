@@ -38,11 +38,11 @@ export class CharactersService {
     }
     console.log("userId :>> ", userId);
     
-    return new this.characterModel({...createCharacterDto, userId}).save();
+    return new this.characterModel({...createCharacterDto, user: userId}).save();
   }
 
-  update(id: string, updateCharacterDto: UpdateCharacterDto) {
-    return `This action updates a #${id} character`;
+  async update(id: string, updateCharacterDto: UpdateCharacterDto) {
+    return await this.characterModel.findByIdAndUpdate({ _id: id }, { $set: updateCharacterDto }, { new: true }).exec();
   }
 
   async remove(id: string) {

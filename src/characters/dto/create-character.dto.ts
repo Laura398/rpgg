@@ -72,9 +72,9 @@ export class CreateCharacterDto {
     @IsOptional()
     familySituation?: FamilySituation;
 
-    @IsObject({})
-    @IsOptional()
-    mainStats?: MainStatsType;
+    // @IsObject()
+    // @IsOptional()
+    mainStats?: any;
 
     @IsObject()
     @IsOptional()
