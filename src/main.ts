@@ -14,6 +14,11 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors({
+    origin: ['http://localhost:5173', 'http://localhost:27017'],
+    credentials: true,
+  });
+
   await app.listen(3007);
 }
 bootstrap();
