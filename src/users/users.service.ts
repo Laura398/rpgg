@@ -13,18 +13,32 @@ export class UsersService {
   ) {}
 
   findAll() {
-    return this.userModel.find().exec();
+    return this.userModel.find({}, { fields : { password: 0 }}).exec();
   }
 
   async findMany(selector: FilterQuery<User>, options?: MongooseQueryOptions) {
+    if (options?.fields) {
+      options.fields = { password: 0, ...options.fields };
+    } else {
+      options = { fields: { password: 0 }, ...options };
+    }
     return await this.userModel.find(selector, options).exec();
   }
 
   async findOneById(id: string) {
-    return await this.userModel.findById({ _id: id }).exec();
+    return await this.userModel.findById({ _id: id }, { fields : { password: 0 }}).exec();
   }
 
   async findOne(selector: FilterQuery<User>, options?: MongooseQueryOptions) {
+    if (options?.fields) {
+      options.fields = { password: 0, ...options.fields };
+    } else {
+      options = { fields: { password: 0 }, ...options };
+    }
+    return await this.userModel.findOne(selector, options).exec();
+  }
+
+  async findOneWithPassword(selector: FilterQuery<User>, options?: MongooseQueryOptions) {
     return await this.userModel.findOne(selector, options).exec();
   }
 
@@ -44,10 +58,14 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    return await this.userModel.findByIdAndUpdate({ _id: id }, { $set: updateUserDto }, { new: true}).exec();
+    const updatedUser = await this.userModel.findByIdAndUpdate({ _id: id }, { $set: updateUserDto }, { new: true}).exec();
+    delete updatedUser.password;
+    return updatedUser;
   }
 
   async remove(id: string) {
-    return await this.userModel.findByIdAndDelete({ _id: id }).exec();
+    const deletedUser = await this.userModel.findByIdAndDelete({ _id: id }).exec();
+    delete deletedUser.password;
+    return deletedUser;
   }
 }
