@@ -49,6 +49,6 @@ export type MoneyType = {
 export type WeaponsAndArmorType = [{
     name?: String,
     atk?: Number,
-    weight?: 'light' | 'medium' | 'heavy',
-    type?: 'melee' | 'range' | 'magic',
+    weight?: 'Léger' | 'Moyen' | 'Lourd',
+    type?: 'Mélée' | 'Distance' | 'Magique',
 }]

@@ -40,10 +40,10 @@ export class CharactersController {
   }
 
   @Post('find-one')
-  findOne(@Body() selector: FilterQuery<Character>, options?: MongooseQueryOptions) {
+  findOne(@Body() selector: FilterQuery<Character>, options?: MongooseQueryOptions) {    
     return this.charactersService.findOne(selector, options);
   }
-
+  
   @UseGuards(AuthGuard)
   @Post()
   create(@Request() request: RequestType, @Body() createCharacterDto: CreateCharacterDto) {
