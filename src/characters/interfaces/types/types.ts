@@ -1,3 +1,5 @@
+import { ALL_SKILLS } from "../constants/constants"
+
 export type MainStatsType = {
     hp?: Number,
     mp?: Number,
@@ -19,10 +21,11 @@ export type TalentsAndWeaknessType = {
     skills?: [String]
 }
 
+const test = ALL_SKILLS.map(item => `'${item}'`).join(' | ');
 export type SpecialType = [{
     name: String,
-    talent: [String],
-    stat: 'phy' | 'int' | 'dxt' | 'men' | 'cha',
+    draw: 'phy' | 'int' | 'dxt' | 'men' | 'cha',
+    stat: String
 }]
 
 export type PrinciplesType = {
