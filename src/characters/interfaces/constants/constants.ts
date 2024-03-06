@@ -23,7 +23,7 @@ export const NON_MAGIC_CLASSES = ["Barbare", "Bersherker", "Guerrier", "Mercenai
 
 export const POLYVALENT_CLASSES = ["Assassin-Voleur", "Aventurier", "Cavalier", "Chasseur"];
 
-export const ARTS = ["Agriculture et Elevage", "Art de la scène", "Art martiaux", "Chant et Danse", "Couture et Tannerie", "Crochetage", "Cuisine et Dépeçage", "Ebenisterie", "Métallurgie", "Mixologie", "Musique", "Navigation", "Orfèvrerie", "Pratique des nœuds", "Sculpture"] as const;
+export const ARTS = ["Agriculture et Elevage", "Art de la scène", "Arts martiaux", "Chant et Danse", "Couture et Tannerie", "Crochetage", "Cuisine et Dépeçage", "Ebenisterie", "Métallurgie", "Mixologie", "Musique", "Navigation", "Orfèvrerie", "Pratique des nœuds", "Sculpture"] as const;
 export const KNOWLEDGES = ["Alchimie", "Anatomie", "Astrologie et Astronomie", "Biologie", "Botanique et Herbologie", "Culture ésotérique", "Culture générale", "Chimie", "Géologie", "Histoire et Géographie", "Littérature et Poésie", "Mathématiques", "Mécanique", "Moeurs et Traditions", "Physique", "Religion"] as const;
 export const INTELLECTS = ["Analyse critique", "Concentration", "Conscience", "Deduction et Raisonnement", "Détermination", "Empathie", "Gestion du stress", "Imagination", "Improvisation", "Lecture et Ecriture", "Maîtrise de ses émotions", "Mémoire", "Philosophie", "Rethorique et Répartie", "Résiliance", "Tempérament"] as const;
 export const PHYSICALS = ["Acrobatie", "Archerie", "Coordination", "Corps à corps", "Démonstration", "Destruction", "Endurance", "Eqiilibre", "Escalade", "Esquive", "Intrusion", "Natation", "Projection", "Respiration", "Souplesse"] as const;

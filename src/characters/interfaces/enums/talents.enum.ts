@@ -2,7 +2,7 @@
 export enum Art {
     AGRI_ANI = 'Agriculture et Elevage',
     SCENE = 'Art de la scène',
-    MARTIAL = 'Art martiaux',
+    MARTIAL = 'Arts martiaux',
     SING_DANCE = 'Chant et Danse',
     SEW_TAN = 'Couture et Tannerie',
     CROCHET = 'Crochetage',
