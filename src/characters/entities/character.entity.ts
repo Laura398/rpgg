@@ -22,6 +22,9 @@ export class Character extends Document {
     nickname?: string;
 
     @Prop()
+    avatar?: string;
+
+    @Prop()
     @IsEnum(Race)
     race?: Race;
 

@@ -46,7 +46,7 @@ export class CharactersController {
   
   @UseGuards(AuthGuard)
   @Post()
-  create(@Request() request: RequestType, @Body() createCharacterDto: CreateCharacterDto) {
+  create(@Request() request: RequestType, @Body() createCharacterDto: CreateCharacterDto) {    
     return this.charactersService.create(request, createCharacterDto);
   }
 

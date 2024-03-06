@@ -47,4 +47,11 @@ export class AuthController {
     res.cookie('Refresh', newTokens.refreshToken, { httpOnly: true });
     return newTokens;
   }
+
+  @UseGuards(AuthGuard)
+  @Get('check-token')
+  @HttpCode(HttpStatus.OK)
+  checkToken() {
+    return { message: 'Token is valid' };
+  }
 }

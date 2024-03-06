@@ -21,6 +21,10 @@ export class CreateCharacterDto {
     @IsOptional()
     nickname?: string;
 
+    @IsString()
+    @IsOptional()
+    avatar?: string;
+
     @IsEnum(Race)
     @IsOptional()
     race?: Race;
