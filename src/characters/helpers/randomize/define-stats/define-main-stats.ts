@@ -1,4 +1,5 @@
 import { MAGIC_CLASSES, NON_MAGIC_CLASSES, POLYVALENT_CLASSES } from "src/characters/interfaces/constants/constants"
+import { Race } from "src/races/entities/race.entity"
 
 export const defineMainStats = (className: string) => {
     if (MAGIC_CLASSES.includes(className)) {

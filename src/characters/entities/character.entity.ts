@@ -80,7 +80,7 @@ export class Character extends Document {
         atk: { type: Number, default: 10, optional: true},
         def: { type: Number, default: 10, optional: true},
     }))
-    mainStats: Record<number, any>;
+    mainStats: Record<string, number>;
 
     @Prop(raw({
         phy: { type: Number, default: 10},
@@ -89,7 +89,7 @@ export class Character extends Document {
         men: { type: Number, default: 10},
         cha: { type: Number, default: 10},
     }))
-    secondaryStats: Record<number, any>;
+    secondaryStats: Record<string, number>;
 
     @Prop({ type: Object })
     talent?: TalentsAndWeaknessType;

@@ -5,11 +5,14 @@ import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { Character } from './entities/character.entity';
 import { randomizeCharacter } from './helpers/randomize/randomize-character';
+import { RacesService } from 'src/races/races.service';
+import redefineCharacterStats from './helpers/randomize/post-treatment/redefine-character-stats';
 
 @Injectable()
 export class CharactersService {
   constructor (
-    @InjectModel(Character.name) private readonly characterModel: Model<Character>
+    @InjectModel(Character.name) private readonly characterModel: Model<Character>,
+    private readonly racesService: RacesService,
   ) {}
 
   findAll() {
@@ -36,10 +39,12 @@ export class CharactersService {
     return new this.characterModel({...createCharacterDto, user: userId}).save();
   }
 
-  randomize(request: any) {
+  async randomize(request: any) {
     const userId = request.user.sub;
     const newCharacter = randomizeCharacter();
-    return new this.characterModel({...newCharacter, user: userId}).save();
+    const raceData = await this.racesService.findOne({ name: newCharacter.race });
+    const correctCharacter = redefineCharacterStats(newCharacter, raceData);    
+    return new this.characterModel({...correctCharacter, user: userId}).save();
   }
 
   async update(id: string, updateCharacterDto: UpdateCharacterDto) {

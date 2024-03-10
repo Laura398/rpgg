@@ -15,6 +15,7 @@ export const randomizeCharacter = () => {
     const gender = GENDERS[Math.floor(Math.random() * GENDERS.length)]
     
     const race = RACES[Math.floor(Math.random() * RACES.length)];
+
     const type = defineType(race, gender);
     const alignment = ALIGNEMENT[Math.floor(Math.random() * ALIGNEMENT.length)];
     const className = CLASSES[Math.floor(Math.random() * CLASSES.length)];

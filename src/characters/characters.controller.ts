@@ -30,7 +30,7 @@ export class CharactersController {
 
   @UseGuards(AuthGuard)
   @Get('random')
-  randomize(@Request() request: RequestType) {
+  randomize(@Request() request: RequestType) {    
     return this.charactersService.randomize(request);
   }
 
@@ -64,7 +64,7 @@ export class CharactersController {
     return this.charactersService.remove(id);
   }
 
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @Delete()
   deleteAll() {
     return this.charactersService.deleteAll();
