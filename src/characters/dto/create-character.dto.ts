@@ -129,9 +129,9 @@ export class CreateCharacterDto {
     @IsOptional()
     money?: MoneyType;
 
-    @IsObject()
+    @IsArray()
     @IsOptional()
-    inventory?: [String];
+    inventory?: String[];
 
     @IsObject()
     @IsOptional()

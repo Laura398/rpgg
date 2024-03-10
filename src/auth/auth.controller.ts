@@ -50,8 +50,11 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Get('check-token')
-  @HttpCode(HttpStatus.OK)
-  checkToken() {
-    return { message: 'Token is valid' };
+  checkToken(@Request() req: any) {
+    const userId = req.user.sub;
+    if (!userId) {
+      return false;
+    }
+    return true;
   }
 }

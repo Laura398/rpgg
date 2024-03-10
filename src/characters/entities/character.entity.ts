@@ -132,7 +132,7 @@ export class Character extends Document {
     money: Record<number, any>;
 
     @Prop({ type: Array })
-    inventory?: string[];
+    inventory?: [String];
 
     @Prop({ type: Array })
     weapons?: WeaponsAndArmorType;
