@@ -1,11 +1,8 @@
 import { Character } from "src/characters/entities/character.entity";
 import { Race } from "src/races/entities/race.entity";
 
-export default function redefineCharacterStats(character: Character, raceData: Race) {
+export default function redefineCharacterStatsWithRace(character: Character, raceData: Race) {
     const newCharacter = character;
-    console.log(newCharacter.race);
-    
-    console.log(raceData);
 
     if (raceData.conditions.secondaryStats.length > 0) {
         for (let stat of raceData.conditions.secondaryStats) {

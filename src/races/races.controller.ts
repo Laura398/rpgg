@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
 import { RacesService } from './races.service';
 
 @Controller('races')
@@ -10,7 +10,7 @@ export class RacesController {
         return this.racesService.create(data);
     }
 
-    @Get('create-many')
+    @Get('all')
     createMany() {    
         return this.racesService.createMany();
     }
@@ -23,5 +23,10 @@ export class RacesController {
     @Post('find-one')
     findOne(@Body() selector: any, options?: any) {    
         return this.racesService.findOne(selector, options);
+    }
+
+    @Delete()
+    deleteAll() {
+        return this.racesService.deleteAll();
     }
 }

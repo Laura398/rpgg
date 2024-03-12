@@ -33,32 +33,32 @@ export const randomizeCharacter = () => {
     const socialStatus = SOCIAL_STATUS[Math.floor(Math.random() * SOCIAL_STATUS.length)];
     const familySituation = FAMILY_SITUATION[Math.floor(Math.random() * FAMILY_SITUATION.length)];
 
-    const mainStats = defineMainStats(className);
-    const secondaryStats = defineSecondaryStats(className);
+    const mainStats = defineMainStats();
+    const secondaryStats = defineSecondaryStats();
 
     const skills = defineSkills();
 
     const languages = defineLanguages(origin, race, type);
 
     const principles = {
-        humanity: Math.floor(Math.random() * 20) - 10,
-        honesty: Math.floor(Math.random() * 20) - 10,
-        honor: Math.floor(Math.random() * 20) - 10,
-        humility: Math.floor(Math.random() * 20) - 10,
-        heroism: Math.floor(Math.random() * 20) - 10,
+        humanity: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        honesty: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        honor: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        humility: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        heroism: Math.floor(Math.random() * 10) - 5, // between -5 and 5
     }
 
     const renown = {
-        nobility: Math.floor(Math.random() * 20) - 10,
-        religion: Math.floor(Math.random() * 20) - 10,
-        bourgeoisie: Math.floor(Math.random() * 20) - 10,
-        common: Math.floor(Math.random() * 20) - 10,
+        nobility: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        religion: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        bourgeoisie: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        common: Math.floor(Math.random() * 10) - 5, // between -5 and 5
     }
 
     const money = {
-        gold: Math.floor(Math.random() * 100) + 1,
-        silver: Math.floor(Math.random() * 100) + 1,
-        copper: Math.floor(Math.random() * 100) + 1,
+        gold: Math.floor(Math.random() * 100) + 1, // between 1 and 100
+        silver: Math.floor(Math.random() * 100) + 1, // between 1 and 100
+        copper: Math.floor(Math.random() * 100) + 1, // between 1 and 100
     }
 
     const newCharacter: any = {

@@ -1,18 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { RacesService } from 'src/races/races.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { Character } from './entities/character.entity';
+import redefineCharacterStatsWithRace from './helpers/randomize/post-treatment/redefine-character-stats-with-race';
 import { randomizeCharacter } from './helpers/randomize/randomize-character';
-import { RacesService } from 'src/races/races.service';
-import redefineCharacterStats from './helpers/randomize/post-treatment/redefine-character-stats';
+import { ClassesService } from 'src/classes/classes.service';
+import redefineCharacterStatsWithClass from './helpers/randomize/post-treatment/redefine-character-stats-with-class';
 
 @Injectable()
 export class CharactersService {
   constructor (
     @InjectModel(Character.name) private readonly characterModel: Model<Character>,
     private readonly racesService: RacesService,
+    private readonly classesService: ClassesService,
   ) {}
 
   findAll() {
@@ -43,8 +46,10 @@ export class CharactersService {
     const userId = request.user.sub;
     const newCharacter = randomizeCharacter();
     const raceData = await this.racesService.findOne({ name: newCharacter.race });
-    const correctCharacter = redefineCharacterStats(newCharacter, raceData);    
-    return new this.characterModel({...correctCharacter, user: userId}).save();
+    const characterDependingOnRace = redefineCharacterStatsWithRace(newCharacter, raceData);
+    const classData = await this.classesService.findOne({ name: newCharacter.class });
+    const characterDependingOnClass = redefineCharacterStatsWithClass(characterDependingOnRace, raceData, classData);
+    return new this.characterModel({...characterDependingOnClass, user: userId}).save();
   }
 
   async update(id: string, updateCharacterDto: UpdateCharacterDto) {

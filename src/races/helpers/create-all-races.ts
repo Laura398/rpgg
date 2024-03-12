@@ -1,4 +1,4 @@
-export const createAllRaces = async () => {
+export const createAllRaces = () => {
     const human = {
         name: "Humain",
         avantages: {
@@ -20,7 +20,7 @@ export const createAllRaces = async () => {
             add: 2
         },
         restrictions: "phy",
-        initHP: 15,
+        initHP: 25,
         initMP: 25
     };
 
@@ -36,7 +36,7 @@ export const createAllRaces = async () => {
             add: 2
         },
         initHP: 35,
-        initMP: 15
+        initMP: 0
     };
 
     const ork = {
@@ -52,7 +52,7 @@ export const createAllRaces = async () => {
         },
         restrictions: "cha",
         initHP: 30,
-        initMP: 15
+        initMP: 0
     };
 
     const hybrid = {

@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
-import { IsEnum } from 'class-validator';
-import mongoose, { Document, now } from 'mongoose';
+import { Document } from 'mongoose';
 
 @Schema()
 export class Race extends Document {

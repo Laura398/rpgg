@@ -17,8 +17,8 @@ export class RacesService {
     return new this.raceModel(data).save();
     }
 
-    async createMany() {
-        const data = await createAllRaces()
+    createMany() {
+        const data = createAllRaces()
         if (!data) {
             throw new Error("Data not found");
         }
@@ -31,5 +31,9 @@ export class RacesService {
 
     async findAll () {
         return await this.raceModel.find().exec();
+    }
+
+    async deleteAll() {
+        return await this.raceModel.deleteMany({}).exec();
     }
 }
