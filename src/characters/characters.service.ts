@@ -45,11 +45,12 @@ export class CharactersService {
   async randomize(request: any) {
     const userId = request.user.sub;
     const newCharacter = randomizeCharacter();
-    const raceData = await this.racesService.findOne({ name: newCharacter.race });
-    const characterDependingOnRace = redefineCharacterStatsWithRace(newCharacter, raceData);
-    const classData = await this.classesService.findOne({ name: newCharacter.class });
-    const characterDependingOnClass = redefineCharacterStatsWithClass(characterDependingOnRace, raceData, classData);
-    return new this.characterModel({...characterDependingOnClass, user: userId}).save();
+    return new this.characterModel({...newCharacter, user: userId}).save();
+    // const raceData = await this.racesService.findOne({ name: newCharacter.race });
+    // const characterDependingOnRace = redefineCharacterStatsWithRace(newCharacter, raceData);
+    // const classData = await this.classesService.findOne({ name: newCharacter.class });
+    // const characterDependingOnClass = redefineCharacterStatsWithClass(characterDependingOnRace, raceData, classData);
+    // return new this.characterModel({...characterDependingOnClass, user: userId}).save();
   }
 
   async update(id: string, updateCharacterDto: UpdateCharacterDto) {
