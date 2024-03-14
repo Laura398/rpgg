@@ -13,45 +13,45 @@ export default function redefineCharacterStatsWithClass(character: Character, ra
         }
     }
 
-    if (classData.avantages.type === "+") {
-        if (classData.avantages.primaryStats.length > 0) {
-            for (const key in classData.avantages.primaryStats) {
-                newCharacter.mainStats[key] += classData.avantages.number;
-            }
-        }
-        if (classData.avantages.secondaryStats.length > 0) {
-            for (const key in classData.avantages.secondaryStats) {
-                newCharacter.secondaryStats[key] += classData.avantages.number;
-            }
-        }
-        if (classData.avantages.skills.length > 0) {
-            for (const key in classData.avantages.skills) {
-                for (const skill in newCharacter.skills[key])
-                newCharacter.skills[key][skill] += classData.avantages.number;
-            }
-        }
-    } else if (classData.avantages.type === "x") {
-        if (classData.avantages.primaryStats.length > 0) {
-            for (const key in classData.avantages.primaryStats) {
-                if (raceData.avantages.primaryStat === key) newCharacter.mainStats[key] += raceData.avantages.add;
-            }
-        }
-        if (classData.avantages.skills.length > 0) {
-            for (const key in classData.avantages.skills) {
-                if (raceData.avantages.skills.includes(key)) newCharacter.skills[key] += raceData.avantages.add;
-            }
-        }
-    }
+    // if (classData.avantages.type === "+") {
+    //     if (classData.avantages.primaryStats.length > 0) {
+    //         for (const key in classData.avantages.primaryStats) {
+    //             newCharacter.mainStats[key] += classData.avantages.number;
+    //         }
+    //     }
+    //     if (classData.avantages.secondaryStats.length > 0) {
+    //         for (const key in classData.avantages.secondaryStats) {
+    //             newCharacter.secondaryStats[key] += classData.avantages.number;
+    //         }
+    //     }
+    //     if (classData.avantages.skills.length > 0) {
+    //         for (const key in classData.avantages.skills) {
+    //             for (const skill in newCharacter.skills[key])
+    //             newCharacter.skills[key][skill] += classData.avantages.number;
+    //         }
+    //     }
+    // } else if (classData.avantages.type === "x") {
+    //     if (classData.avantages.primaryStats.length > 0) {
+    //         for (const key in classData.avantages.primaryStats) {
+    //             if (raceData.avantages.primaryStat === key) newCharacter.mainStats[key] += raceData.avantages.add;
+    //         }
+    //     }
+    //     if (classData.avantages.skills.length > 0) {
+    //         for (const key in classData.avantages.skills) {
+    //             if (raceData.avantages.skills.includes(key)) newCharacter.skills[key] += raceData.avantages.add;
+    //         }
+    //     }
+    // }
     
-    if (classData.restrictions.primaryStat) {
-        newCharacter.secondaryStats[classData.restrictions.primaryStat] -= classData.restrictions.number;
-    } 
-    if (classData.restrictions.skills.length > 0) {
-        for (const key in classData.avantages.skills) {
-            for (const skill in newCharacter.skills[key])
-            newCharacter.skills[key][skill] -= classData.restrictions.number;
-        }
-    }
+    // if (classData.restrictions.primaryStat) {
+    //     newCharacter.secondaryStats[classData.restrictions.primaryStat] -= classData.restrictions.number;
+    // } 
+    // if (classData.restrictions.skills.length > 0) {
+    //     for (const key in classData.avantages.skills) {
+    //         for (const skill in newCharacter.skills[key])
+    //         newCharacter.skills[key][skill] -= classData.restrictions.number;
+    //     }
+    // }
 
     if (classData.initHP && newCharacter.mainStats.hp < classData.initHP) {
         newCharacter.mainStats.hp = classData.initHP;
