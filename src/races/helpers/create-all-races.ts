@@ -6,6 +6,7 @@ export const createAllRaces = () => {
             secondaryStat: ["all"],
             add: 2
         },
+        magic: true,
     };
     
     const elf = {
@@ -21,7 +22,8 @@ export const createAllRaces = () => {
         },
         restrictions: "phy",
         initHP: 25,
-        initMP: 25
+        initMP: 25,
+        magic: true
     };
 
     const dwarf = {
@@ -36,7 +38,8 @@ export const createAllRaces = () => {
             add: 2
         },
         initHP: 35,
-        initMP: 0
+        initMP: 0,
+        magic: false
     };
 
     const ork = {
@@ -52,7 +55,8 @@ export const createAllRaces = () => {
         },
         restrictions: "cha",
         initHP: 30,
-        initMP: 0
+        initMP: 0,
+        magic: false
     };
 
     const hybrid = {
@@ -62,7 +66,8 @@ export const createAllRaces = () => {
             minimum: 12
         },
         initHP: 30,
-        initMP: 15
+        initMP: 15,
+        magic: true
     };
 
     const halfling = {
@@ -77,7 +82,8 @@ export const createAllRaces = () => {
             add: 1
         },
         initHP: 30,
-        initMP: 10
+        initMP: 10,
+        magic: true
     };
 
     const lutin = {
@@ -93,7 +99,8 @@ export const createAllRaces = () => {
         },
         restrictions: "phy",
         initHP: 15,
-        initMP: 25
+        initMP: 25,
+        magic: true
     };
 
     const animus = {
@@ -103,7 +110,8 @@ export const createAllRaces = () => {
             minimum: 12
         },
         initHP: 30,
-        initMP: 15
+        initMP: 15,
+        magic: true
     };
     
     return [human, elf, dwarf, ork, hybrid, halfling, lutin, animus];

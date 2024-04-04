@@ -8,7 +8,6 @@ import { Race } from '../interfaces/enums/races.enum';
 import { Languages } from '../interfaces/types/languages.type';
 import { TalentsType } from '../interfaces/types/talents.type';
 import { RenownType, SpecialType, TalentsAndWeaknessType, WeaponsAndArmorType } from '../interfaces/types/types';
-import { Classes } from '../interfaces/enums/classes.enum';
 
 @Schema()
 export class Character extends Document {
@@ -31,8 +30,8 @@ export class Character extends Document {
     @Prop()
     type?: string;
 
-    @Prop(Classes)
-    class?: Classes;
+    @Prop()
+    class?: string;
 
     @Prop()
     @IsEnum(Alignments)

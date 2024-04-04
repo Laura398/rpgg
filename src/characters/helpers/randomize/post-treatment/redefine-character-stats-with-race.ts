@@ -4,7 +4,7 @@ import { Race } from "src/races/entities/race.entity";
 export default function redefineCharacterStatsWithRace(character: Character, raceData: Race) {
     const newCharacter = character;
 
-    if (raceData.conditions.secondaryStats.length > 0) {
+    if (raceData?.conditions?.secondaryStats?.length > 0) {
         for (let stat of raceData.conditions.secondaryStats) {
             if (newCharacter.secondaryStats[stat] < raceData.conditions.minimum) {
                 newCharacter.secondaryStats[stat] = raceData.conditions.minimum;
@@ -30,11 +30,14 @@ export default function redefineCharacterStatsWithRace(character: Character, rac
     //     newCharacter.secondaryStats[raceData.restrictions] -+ 1;
     // }
     
-    if (raceData.initHP) {
+    if (raceData?.initHP) {
         newCharacter.mainStats.hp = raceData.initHP;
     }
-    if (raceData.initMP) {
+    if (raceData?.initMP) {
         newCharacter.mainStats.mp = raceData.initMP;
+    }
+    if (!raceData?.magic) {
+        newCharacter.mainStats.mp = 0;
     }
     newCharacter.mainStats.level = 1;
 

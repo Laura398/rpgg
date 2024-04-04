@@ -18,7 +18,15 @@ export class ClassesService {
         return this.characterClassModel.insertMany(data);
     }
 
+    findAll() {
+        return this.characterClassModel.find().exec();
+    }
+
     findOne (selector: any, options?: any) {
         return this.characterClassModel.findOne(selector, options).exec();
+    }
+
+    deleteAll() {
+        return this.characterClassModel.deleteMany().exec();
     }
 }

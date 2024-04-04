@@ -2,7 +2,7 @@ import { Character } from "src/characters/entities/character.entity";
 import { Class } from "src/classes/entities/class.entity";
 import { Race } from "src/races/entities/race.entity";
 
-export default function redefineCharacterStatsWithClass(character: Character, raceData: Race, classData: Class) {
+export default function redefineCharacterStatsWithClass(character: Character, classData: Class) {
     const newCharacter = character;
 
     if (classData.conditions.secondaryStats.length > 0) {

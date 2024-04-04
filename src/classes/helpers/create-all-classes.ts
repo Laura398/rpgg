@@ -2,6 +2,9 @@ export const createAllClasses = () => {
     const adventurer = {
         name: "Aventurier",
         initHP: 30,
+        allWeapons: true,
+        allArmors: true,
+        magic: true,
     }
 
     const warrior = {
@@ -14,13 +17,12 @@ export const createAllClasses = () => {
             primaryStats: ["dxt"],
             type: "x",
             number: 2,
-            other: ["Toutes armes", "Toutes armures"],
-        },
-        restrictions: {
-            other: ["Pas de dons magiques"],
         },
         initHP: 30,
         initMP: 0,
+        allWeapons: true,
+        allArmors: true,
+        magic: false,
     }
 
     const berserker = {
@@ -33,15 +35,18 @@ export const createAllClasses = () => {
             primaryStats: ["dxt"],
             type: "x",
             number: 1.5,
-            other: ["Toutes armes"],
         },
         restrictions: {
             skills: ["social", "knowledge"],
             number: 2,
-            other: ["Pas d'armures lourdes"],
         },
         initHP: 40,
         initMP: 10,
+        allWeapons: true,
+        allArmors: false,
+        heavyArmors: false,
+        lightArmors: true,
+        magic: true,
     }
 
     const barbarian = {
@@ -55,7 +60,6 @@ export const createAllClasses = () => {
             secondaryStats: ["dxt"],
             type: "+",
             number: 2,
-            other: ["Toutes armes"],
         },
         restrictions: {
             skills: ["knowledge", "social"],
@@ -63,6 +67,9 @@ export const createAllClasses = () => {
         },
         initHP: 35,
         initMP: 0,
+        allWeapons: true,
+        allArmors: true,
+        magic: false,
     }
 
     const mercenary = {
@@ -75,13 +82,15 @@ export const createAllClasses = () => {
             skills: ["survival"],
             type: "+",
             number: 2,
-            other: ["Double les pièces gagnées"],
         },
-        restrictions: {
-            others: ["Pas d'armures lourdes"],
-        },
+        other: ["Double les pièces gagnées"],
         initHP: 32,
         initMP: 0,
+        allWeapons: true,
+        allArmors: false,
+        heavyArmors: false,
+        lightArmors: true,
+        magic: false,
     }
 
     const hunter = {
@@ -94,13 +103,16 @@ export const createAllClasses = () => {
             skills: ["survival"],
             type: "+",
             number: 4,
-            other: ["Bonus armes à distance"],
-        },
-        restrictions: {
-            other: ["Pas d'armures lourdes", "Pas d'armures lourdes", "Malus armes de mêlée"],
         },
         initHP: 28,
         initMP: 0,
+        allWeapons: true,
+        allArmors: false,
+        heavyArmors: false,
+        lightArmors: true,
+        magic: false,
+        bonus: "ranged weapons",
+        malus: "melee weapons"
     }
 
     const mage = {
@@ -114,11 +126,15 @@ export const createAllClasses = () => {
             type: "+",
             number: 2,
         },
-        restrictions: {
-            other: ["Pas d'armures de guerrier", "Pas d'armes de guerrier"],
-        },
         initHP: 20,
         initMP: 30,
+        twoHandedWeapons: false,
+        rangedWeapons: false,
+        meleeWeapons: false,
+        allArmors: false,
+        heavyArmors: false,
+        lightArmors: false,
+        magic: true,
     }
 
     const wizard = {
@@ -133,11 +149,15 @@ export const createAllClasses = () => {
             type: "+",
             number: 2,
         },
-        restrictions: {
-            other: ["Pas d'armures de guerrier", "Pas d'armes de guerrier"],
-        },
         initHP: 30,
         initMP: 20,
+        twoHandedWeapons: false,
+        rangedWeapons: false,
+        meleeWeapons: false,
+        allArmors: false,
+        heavyArmors: false,
+        lightArmors: false,
+        magic: true,
     }
 
     const druid = {
@@ -154,10 +174,16 @@ export const createAllClasses = () => {
         restrictions: {
             skills: ["social"],
             number: 2,
-            other: ["Pas d'armures de guerrier", "Pas d'armes de guerrier"],
         },
         initHP: 24,
         initMP: 26,
+        twoHandedWeapons: false,
+        rangedWeapons: false,
+        meleeWeapons: false,
+        allArmors: false,
+        heavyArmors: false,
+        lightArmors: false,
+        magic: true,
     }
 
     const monk = {
@@ -175,10 +201,16 @@ export const createAllClasses = () => {
         restrictions: {
             skills: ["survival"],
             number: 2,
-            other: ["Pas d'armures de guerrier", "Pas d'armes de guerrier"],
         },
         initHP: 25,
         initMP: 25,
+        twoHandedWeapons: false,
+        rangedWeapons: false,
+        meleeWeapons: false,
+        allArmors: false,
+        heavyArmors: false,
+        lightArmors: false,
+        magic: true,
     }
 
     const assassin = {
@@ -193,11 +225,15 @@ export const createAllClasses = () => {
             type: "+",
             number: 2,
         },
-        restrictions: {
-            other: ["Pas d'armures de guerrier", "Pas d'armes à deux mains"],
-        },
         initHP: 30,
         initMP: 0,
+        twoHandedWeapons: false,
+        rangedWeapons: true,
+        meleeWeapons: true,
+        allArmors: false,
+        heavyArmors: false,
+        lightArmors: false,
+        magic: false,
     }
 
     const rider = {
@@ -210,13 +246,17 @@ export const createAllClasses = () => {
             skills: ["social", "kowledge"],
             type: "+",
             number: 2,
-            other: ["Gain d'aptitudes x1.5"]
         },
-        restrictions: {
-            other: ["Pas d'armures de guerrier", "Pas d'armes à deux mains", "2 d'écart maximum entre les statistiques du personnages"],
-        },
+        other: ["Gain d'aptitudes x1.5",  "2 d'écart maximum entre les statistiques du personnages"],
         initHP: 30,
         initMP: 0,
+        twoHandedWeapons: false,
+        rangedWeapons: true,
+        meleeWeapons: true,
+        allArmors: false,
+        heavyArmors: false,
+        lightArmors: false,
+        magic: false,
     }
 
     const priest = {
@@ -229,10 +269,13 @@ export const createAllClasses = () => {
             skills: ["kowledge", "social"],
             type: "+",
             number: 2,
-            other: ["Miracles"]
         },
         initHP: 25,
         initMP: 20,
+        allWeapons: true,
+        allArmors: true,
+        magic: true,
+        miracles: true,
     }
 
     const paladin = {
@@ -246,10 +289,13 @@ export const createAllClasses = () => {
             skills: ["social"],
             type: "+",
             number: 2,
-            other: ["Miracles spécifiques"]
         },
         initHP: 30,
         initMP: 15,
+        allWeapons: true,
+        allArmors: true,
+        magic: true,
+        specificMiracles: true,
     }
 
     return [adventurer, warrior, berserker, barbarian, mercenary, hunter, mage, wizard, druid, monk, assassin, rider, priest, paladin];

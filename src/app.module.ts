@@ -8,6 +8,7 @@ import { CharactersModule } from './characters/characters.module';
 import { RacesModule } from './races/races.module';
 import { UsersModule } from './users/users.module';
 import { ClassesModule } from './classes/classes.module';
+import { WeaponsModule } from './weapons/weapons.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ClassesModule } from './classes/classes.module';
     CharactersModule,
     RacesModule,
     ClassesModule,
+    WeaponsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

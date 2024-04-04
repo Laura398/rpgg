@@ -9,6 +9,7 @@ import redefineCharacterStatsWithRace from './helpers/randomize/post-treatment/r
 import { randomizeCharacter } from './helpers/randomize/randomize-character';
 import { ClassesService } from 'src/classes/classes.service';
 import redefineCharacterStatsWithClass from './helpers/randomize/post-treatment/redefine-character-stats-with-class';
+import { defineCharacterClass } from './helpers/randomize/post-treatment/define-character-class';
 
 @Injectable()
 export class CharactersService {
@@ -45,11 +46,13 @@ export class CharactersService {
   async randomize(request: any) {
     const userId = request.user.sub;
     const newCharacter = randomizeCharacter();
-    // return new this.characterModel({...newCharacter, user: userId}).save();
-    const raceData = await this.racesService.findOne({ name: newCharacter.race });
-    const characterDependingOnRace = redefineCharacterStatsWithRace(newCharacter, raceData);
-    const classData = await this.classesService.findOne({ name: newCharacter.class });
-    const characterDependingOnClass = redefineCharacterStatsWithClass(characterDependingOnRace, raceData, classData);
+    const allRaces = await this.racesService.findAll();
+    const characterRace = allRaces.find((race) => race.name === newCharacter.race);
+    const characterDependingOnRace = redefineCharacterStatsWithRace(newCharacter, characterRace);
+    const allClasses = await this.classesService.findAll();
+    const characterWithClass = defineCharacterClass(characterDependingOnRace, allRaces, allClasses);
+    const classData = allClasses.find((characterClass) => characterClass.name === characterWithClass.class);
+    const characterDependingOnClass = redefineCharacterStatsWithClass(characterWithClass, classData);
     return new this.characterModel({...characterDependingOnClass, user: userId}).save();
   }
 

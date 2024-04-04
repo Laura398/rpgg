@@ -1,4 +1,4 @@
-import { ALIGNEMENT, CLASSES, FAMILY_SITUATION, GENDERS, ORIGIN, SEXUALITY, SOCIAL_STATUS } from "src/characters/interfaces/constants/constants";
+import { ALIGNEMENT, FAMILY_SITUATION, GENDERS, ORIGIN, SEXUALITY, SOCIAL_STATUS } from "src/characters/interfaces/constants/constants";
 import { FIRSTNAMES, LASTNAMES } from "src/characters/interfaces/constants/names.constants";
 import { RACES } from "src/characters/interfaces/constants/races.constant";
 import { defineHeight } from "./define-admin-data/define-height";
@@ -18,7 +18,6 @@ export const randomizeCharacter = () => {
 
     const type = defineType(race, gender);
     const alignment = ALIGNEMENT[Math.floor(Math.random() * ALIGNEMENT.length)];
-    const className = CLASSES[Math.floor(Math.random() * CLASSES.length)];
     
     const sexuality = SEXUALITY[Math.floor(Math.random() * SEXUALITY.length)];
     const height = defineHeight(race, gender);
@@ -67,7 +66,7 @@ export const randomizeCharacter = () => {
         gender,
         race,
         alignment,
-        class: className,
+        // class: className,
         sexuality,
         height,
         weight,

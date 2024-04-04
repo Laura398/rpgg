@@ -35,6 +35,9 @@ export class Race extends Document {
 
     @Prop()
     initMP?: number;
+
+    @Prop({ default: true })
+    magic: boolean;
 }
 
 export const RaceSchema = SchemaFactory.createForClass(Race);
