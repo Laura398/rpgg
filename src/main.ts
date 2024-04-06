@@ -14,7 +14,10 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors();
+  app.enableCors({
+    origin: ['https://mundi-bellum.onrender.com'],
+    credentials: true,
+  });
 
   await app.listen(3007);
 }
