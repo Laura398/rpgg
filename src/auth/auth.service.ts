@@ -55,7 +55,6 @@ export class AuthService {
         if (!accessToken) {
             throw new BadRequestException();
         }
-        console.log("accessToken: ", accessToken);
         
         const newRefreshToken = await this.jwtService.signAsync(newPayload, {
             secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),

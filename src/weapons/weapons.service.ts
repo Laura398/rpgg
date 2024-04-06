@@ -16,7 +16,6 @@ export class WeaponsService {
 
 createMany() {
     // const data = ALL_WEAPONS
-    console.log(ALL_WEAPONS);
     if (!ALL_WEAPONS) {
         throw new Error("Data not found");
     }
