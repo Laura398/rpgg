@@ -44,20 +44,27 @@ export class CharactersService {
   }
 
   async randomize(request: any) {
-    const userId = request.user.sub;
-    console.log('request', request);
+    try {
+      const userId = request.user.sub;
+      console.log('request', request);
+      
+      const newCharacter = randomizeCharacter();
+      const allRaces = await this.racesService.findAll();
+      const characterRace = allRaces.find((race) => race.name === newCharacter.race);
+      const characterDependingOnRace = redefineCharacterStatsWithRace(newCharacter, characterRace);
+      const allClasses = await this.classesService.findAll();
+      const characterWithClass = defineCharacterClass(characterDependingOnRace, allRaces, allClasses);
+      const classData = allClasses.find((characterClass) => characterClass.name === characterWithClass.class);
+      const characterDependingOnClass = redefineCharacterStatsWithClass(characterWithClass, classData);
+      console.log('characterDependingOnClass', characterDependingOnClass);
+      
+      return new this.characterModel({...characterDependingOnClass, user: userId}).save();
+    } catch (error) {
+      console.error('error', error);
+      
+      throw new Error("Error while randomizing character");
+    }
     
-    const newCharacter = randomizeCharacter();
-    const allRaces = await this.racesService.findAll();
-    const characterRace = allRaces.find((race) => race.name === newCharacter.race);
-    const characterDependingOnRace = redefineCharacterStatsWithRace(newCharacter, characterRace);
-    const allClasses = await this.classesService.findAll();
-    const characterWithClass = defineCharacterClass(characterDependingOnRace, allRaces, allClasses);
-    const classData = allClasses.find((characterClass) => characterClass.name === characterWithClass.class);
-    const characterDependingOnClass = redefineCharacterStatsWithClass(characterWithClass, classData);
-    console.log('characterDependingOnClass', characterDependingOnClass);
-    
-    return new this.characterModel({...characterDependingOnClass, user: userId}).save();
   }
 
   async update(id: string, updateCharacterDto: UpdateCharacterDto) {
