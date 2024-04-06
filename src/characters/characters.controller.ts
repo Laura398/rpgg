@@ -31,6 +31,8 @@ export class CharactersController {
   @UseGuards(AuthGuard)
   @Get('random')
   randomize(@Request() request: RequestType) {    
+    console.log('request', request);
+    
     return this.charactersService.randomize(request);
   }
 
