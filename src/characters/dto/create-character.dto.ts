@@ -6,7 +6,6 @@ import { Race } from "../interfaces/enums/races.enum";
 import { Languages } from "../interfaces/types/languages.type";
 import { TalentsType } from "../interfaces/types/talents.type";
 import { MainStatsType, MoneyType, PrinciplesType, RenownType, SecondaryStatsType, SpecialType, TalentsAndWeaknessType, WeaponsAndArmorType } from "../interfaces/types/types";
-import { Classes } from "../interfaces/enums/classes.enum";
 
 export class CreateCharacterDto {
     @IsString()
@@ -33,9 +32,9 @@ export class CreateCharacterDto {
     @IsOptional()
     type?: string;
 
-    @IsEnum(Classes)
+    @IsString()
     @IsOptional()
-    class?: Classes;
+    class?: string;
 
     @IsEnum(Alignments)
     @IsOptional()

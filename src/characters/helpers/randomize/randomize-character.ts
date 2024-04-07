@@ -1,4 +1,4 @@
-import { ALIGNEMENT, CLASSES, FAMILY_SITUATION, GENDERS, ORIGIN, SEXUALITY, SOCIAL_STATUS } from "src/characters/interfaces/constants/constants";
+import { ALIGNEMENT, FAMILY_SITUATION, GENDERS, ORIGIN, SEXUALITY, SOCIAL_STATUS } from "src/characters/interfaces/constants/constants";
 import { FIRSTNAMES, LASTNAMES } from "src/characters/interfaces/constants/names.constants";
 import { RACES } from "src/characters/interfaces/constants/races.constant";
 import { defineHeight } from "./define-admin-data/define-height";
@@ -15,9 +15,9 @@ export const randomizeCharacter = () => {
     const gender = GENDERS[Math.floor(Math.random() * GENDERS.length)]
     
     const race = RACES[Math.floor(Math.random() * RACES.length)];
+
     const type = defineType(race, gender);
     const alignment = ALIGNEMENT[Math.floor(Math.random() * ALIGNEMENT.length)];
-    const className = CLASSES[Math.floor(Math.random() * CLASSES.length)];
     
     const sexuality = SEXUALITY[Math.floor(Math.random() * SEXUALITY.length)];
     const height = defineHeight(race, gender);
@@ -32,32 +32,32 @@ export const randomizeCharacter = () => {
     const socialStatus = SOCIAL_STATUS[Math.floor(Math.random() * SOCIAL_STATUS.length)];
     const familySituation = FAMILY_SITUATION[Math.floor(Math.random() * FAMILY_SITUATION.length)];
 
-    const mainStats = defineMainStats(className);
-    const secondaryStats = defineSecondaryStats(className);
+    const mainStats = defineMainStats();
+    const secondaryStats = defineSecondaryStats();
 
     const skills = defineSkills();
 
     const languages = defineLanguages(origin, race, type);
 
     const principles = {
-        humanity: Math.floor(Math.random() * 20) - 10,
-        honesty: Math.floor(Math.random() * 20) - 10,
-        honor: Math.floor(Math.random() * 20) - 10,
-        humility: Math.floor(Math.random() * 20) - 10,
-        heroism: Math.floor(Math.random() * 20) - 10,
+        humanity: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        honesty: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        honor: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        humility: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        heroism: Math.floor(Math.random() * 10) - 5, // between -5 and 5
     }
 
     const renown = {
-        nobility: Math.floor(Math.random() * 20) - 10,
-        religion: Math.floor(Math.random() * 20) - 10,
-        bourgeoisie: Math.floor(Math.random() * 20) - 10,
-        common: Math.floor(Math.random() * 20) - 10,
+        nobility: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        religion: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        bourgeoisie: Math.floor(Math.random() * 10) - 5, // between -5 and 5
+        common: Math.floor(Math.random() * 10) - 5, // between -5 and 5
     }
 
     const money = {
-        gold: Math.floor(Math.random() * 100) + 1,
-        silver: Math.floor(Math.random() * 100) + 1,
-        copper: Math.floor(Math.random() * 100) + 1,
+        gold: Math.floor(Math.random() * 100) + 1, // between 1 and 100
+        silver: Math.floor(Math.random() * 100) + 1, // between 1 and 100
+        copper: Math.floor(Math.random() * 100) + 1, // between 1 and 100
     }
 
     const newCharacter: any = {
@@ -66,7 +66,7 @@ export const randomizeCharacter = () => {
         gender,
         race,
         alignment,
-        class: className,
+        // class: className,
         sexuality,
         height,
         weight,

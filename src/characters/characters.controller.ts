@@ -30,8 +30,15 @@ export class CharactersController {
 
   @UseGuards(AuthGuard)
   @Get('random')
-  randomize(@Request() request: RequestType) {
-    return this.charactersService.randomize(request);
+  randomize(@Request() request: RequestType) {    
+    try {
+      console.log('request', request);
+    
+      return this.charactersService.randomize(request);
+    } catch (error) {
+      console.error('error', error);
+      return error;
+    }
   }
 
   @Get(':id')
@@ -52,9 +59,7 @@ export class CharactersController {
 
   @UseGuards(AuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCharacterDto: UpdateCharacterDto) {
-    console.log(updateCharacterDto);
-    
+  update(@Param('id') id: string, @Body() updateCharacterDto: UpdateCharacterDto) {    
     return this.charactersService.update(id, updateCharacterDto);
   }
   
@@ -64,7 +69,7 @@ export class CharactersController {
     return this.charactersService.remove(id);
   }
 
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @Delete()
   deleteAll() {
     return this.charactersService.deleteAll();
