@@ -26,6 +26,8 @@ export class AuthService {
         if (!validUser) {
             throw new UnauthorizedException();
         }
+        console.log('validUser', validUser);
+        
         const payload = { sub: user._id, username: user.username };
 
         const accessToken = await this.jwtService.signAsync(payload)
@@ -41,6 +43,11 @@ export class AuthService {
             throw new BadRequestException();
         }
 
+        console.log({
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        });
+        
         return {
             accessToken: accessToken,
             refreshToken: refreshToken
