@@ -12,8 +12,12 @@ export class AuthService {
         private configService: ConfigService,
     ) {}
 
-    async login(email: string, password: string): Promise<{ accessToken: string, refreshToken: string }> {        
+    async login(email: string, password: string): Promise<{ accessToken: string, refreshToken: string }> {
+        console.log('login', email, password);
+                
         const user = await this.usersService.findOne({ email })
+        console.log('user', user);
+        
         if (!user) {
             throw new UnauthorizedException();
         }
