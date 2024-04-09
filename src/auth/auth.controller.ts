@@ -28,6 +28,7 @@ export class AuthController {
     const tokens = await this.authService.login(loginDto.email, loginDto.password);    
     res.cookie('Authorization', `Bearer ${tokens.accessToken}`, { expires: new Date(Date.now() + (30*24*3600000)), httpOnly: true }); // set 1month
     res.cookie('Refresh', tokens.refreshToken, { expires: new Date(Date.now() + (30*24*3600000)), httpOnly: true});
+    console.info("Loggin : ", tokens);
     return tokens;
   }
 

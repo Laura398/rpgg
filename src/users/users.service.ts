@@ -51,6 +51,7 @@ export class UsersService {
   
       const savedUser = await new this.userModel({...createUserDto, password: hashedPassword}).save();
       delete savedUser.password;
+      console.info('Registering : ', savedUser);
       return savedUser;
     } catch (error) {
       return new BadRequestException("error : ", error);

@@ -12,12 +12,8 @@ export class AuthService {
         private configService: ConfigService,
     ) {}
 
-    async login(email: string, password: string): Promise<{ accessToken: string, refreshToken: string }> {
-        console.log('login', email, password);
-                
-        const user = await this.usersService.findOne({ email })
-        console.log('user', user);
-        
+    async login(email: string, password: string): Promise<{ accessToken: string, refreshToken: string }> {                
+        const user = await this.usersService.findOne({ email })        
         if (!user) {
             throw new UnauthorizedException();
         }
@@ -26,7 +22,6 @@ export class AuthService {
         if (!validUser) {
             throw new UnauthorizedException();
         }
-        console.log('validUser', validUser);
         
         const payload = { sub: user._id, username: user.username };
 
@@ -42,11 +37,6 @@ export class AuthService {
         if (!refreshToken) {
             throw new BadRequestException();
         }
-
-        console.log({
-            accessToken: accessToken,
-            refreshToken: refreshToken
-        });
         
         return {
             accessToken: accessToken,
@@ -81,25 +71,19 @@ export class AuthService {
         };
     }
 
-    async validateUser(email: string, loginPassword: string): Promise<any> {
-        console.log('validateUser', email, loginPassword);
-        
+    async validateUser(email: string, loginPassword: string): Promise<any> {        
         const user = await this.usersService.findOneWithPassword({email});
         if (!user) {
             return null;
         }
-        console.log('user', user);
                 
         const validPassword = await bcrypt.compare(loginPassword, user.password);
         if (!validPassword) {
             return null;
         }
-        console.log('validPassword', validPassword);
         
         const { password, ...result } = user;
-
-        console.log('result', result);
         
-          return result;
+        return result;
       }
 }
