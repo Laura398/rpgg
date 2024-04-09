@@ -90,11 +90,18 @@ export class AuthService {
         }
         console.log('user', user);
         
+        console.log(await bcrypt.compare(loginPassword, user.password));
+        
         const validPassword = await bcrypt.compare(loginPassword, user.password);
         if (!validPassword) {
             return null;
         }
+        console.log('validPassword', validPassword);
+        
         const { password, ...result } = user;
+
+        console.log('result', result);
+        
           return result;
       }
 }
