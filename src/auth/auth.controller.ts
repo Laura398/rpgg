@@ -26,8 +26,8 @@ export class AuthController {
   @Post('login')
   async login(@Res() res: Response, @Body() loginDto: LoginDto) {    
     const tokens = await this.authService.login(loginDto.email, loginDto.password);    
-    res.cookie('Authorization', `Bearer ${tokens.accessToken}`, { httpOnly: true, maxAge: Number(this.configService.get<string>('JWT_ACCESS_TOKEN_EXPIRATION_TIME')), expires: new Date(Date.now() + Number(this.configService.get<string>('JWT_ACCESS_TOKEN_EXPIRATION_TIME')))});
-    res.cookie('Refresh', tokens.refreshToken, { httpOnly: true, maxAge: Number(this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET')), expires: new Date(Date.now() + Number(this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'))) });
+    res.cookie('Authorization', `Bearer ${tokens.accessToken}`, { expires: new Date(Date.now() + (30*24*3600000)), httpOnly: true }); // set 1month
+    res.cookie('Refresh', tokens.refreshToken, { expires: new Date(Date.now() + (30*24*3600000)), httpOnly: true});
     return tokens;
   }
 
