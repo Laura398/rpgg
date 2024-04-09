@@ -12,8 +12,8 @@ export class AuthService {
         private configService: ConfigService,
     ) {}
 
-    async login(email: string, password: string): Promise<{ accessToken: string, refreshToken: string }> {        
-        const user = await this.usersService.findOne({ email })
+    async login(email: string, password: string): Promise<{ accessToken: string, refreshToken: string }> {                
+        const user = await this.usersService.findOne({ email })        
         if (!user) {
             throw new UnauthorizedException();
         }
@@ -22,6 +22,7 @@ export class AuthService {
         if (!validUser) {
             throw new UnauthorizedException();
         }
+        
         const payload = { sub: user._id, username: user.username };
 
         const accessToken = await this.jwtService.signAsync(payload)
@@ -36,7 +37,7 @@ export class AuthService {
         if (!refreshToken) {
             throw new BadRequestException();
         }
-
+        
         return {
             accessToken: accessToken,
             refreshToken: refreshToken
@@ -55,7 +56,6 @@ export class AuthService {
         if (!accessToken) {
             throw new BadRequestException();
         }
-        console.log("accessToken: ", accessToken);
         
         const newRefreshToken = await this.jwtService.signAsync(newPayload, {
             secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET'),
@@ -71,16 +71,19 @@ export class AuthService {
         };
     }
 
-    async validateUser(email: string, loginPassword: string): Promise<any> {
-        const user = await this.usersService.findOneWithPassword({email});     
+    async validateUser(email: string, loginPassword: string): Promise<any> {        
+        const user = await this.usersService.findOneWithPassword({email});
         if (!user) {
             return null;
-        }   
+        }
+                
         const validPassword = await bcrypt.compare(loginPassword, user.password);
         if (!validPassword) {
             return null;
         }
+        
         const { password, ...result } = user;
-          return result;
+        
+        return result;
       }
 }

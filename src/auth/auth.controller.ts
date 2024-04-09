@@ -6,12 +6,14 @@ import { Response } from 'express';
 import { RequestType } from 'src/interfaces/types';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
+    private configService: ConfigService,
   ) {}
 
   @HttpCode(HttpStatus.CREATED)
@@ -22,17 +24,18 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  async login(@Res({ passthrough: true }) res: Response, @Body() loginDto: LoginDto) {
+  async login(@Res() res: Response, @Body() loginDto: LoginDto) {    
     const tokens = await this.authService.login(loginDto.email, loginDto.password);    
-    res.cookie('Authorization', `Bearer ${tokens.accessToken}`, { httpOnly: true });
-    res.cookie('Refresh', tokens.refreshToken, { httpOnly: true });
+    res.cookie('Authorization', `Bearer ${tokens.accessToken}`, { expires: new Date(Date.now() + (30*24*3600000)), httpOnly: true }); // set 1month
+    res.cookie('Refresh', tokens.refreshToken, { expires: new Date(Date.now() + (30*24*3600000)), httpOnly: true});
+    console.info("Loggin : ", tokens);
     return tokens;
   }
 
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @Get('logout')
-  logout(@Res({ passthrough: true }) res: Response) {
+  logout(@Res() res: Response) {
     res.clearCookie('Authorization');
     res.clearCookie('Refresh');
   }

@@ -16,22 +16,22 @@ export const defineSkills = () => {
     const survival = {};
 
     artsNames.forEach(artName => {
-        art[artName] = Math.floor(Math.random() * 20);
+        art[artName] = 5 + Math.floor(Math.random() * 10); // between 5 and 15
     })
     knowledgeNames.forEach(knowledgeName => {
-        knowledge[knowledgeName] = Math.floor(Math.random() * 20);
+        knowledge[knowledgeName] = 5 + Math.floor(Math.random() * 10); // between 5 and 15
     })
     intellectNames.forEach(intellectName => {
-        intellect[intellectName] = Math.floor(Math.random() * 20);
+        intellect[intellectName] = 5 + Math.floor(Math.random() * 10); // between 5 and 15
     })
     physicalNames.forEach(physicalName => {
-        physical[physicalName] = Math.floor(Math.random() * 20);
+        physical[physicalName] = 5 + Math.floor(Math.random() * 10); // between 5 and 15
     })
     socialNames.forEach(socialName => {
-        social[socialName] = Math.floor(Math.random() * 20);
+        social[socialName] = 5 + Math.floor(Math.random() * 10); // between 5 and 15
     })
     survivalNames.forEach(survivalName => {
-        survival[survivalName] = Math.floor(Math.random() * 20);
+        survival[survivalName] = 5 + Math.floor(Math.random() * 10); // between 5 and 15
     })
 
     return {
