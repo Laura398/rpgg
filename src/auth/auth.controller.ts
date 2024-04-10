@@ -15,13 +15,11 @@ export class AuthController {
     // private configService: ConfigService,
   ) {}
 
-  @HttpCode(HttpStatus.CREATED)
   @Post('register')
   async register(@Body() registerUserDto: CreateUserDto) {
     return this.usersService.create(registerUserDto);
   }
 
-  @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Res() res: Response, @Body() loginDto: LoginDto) {    
     const tokens = await this.authService.login(loginDto.email, loginDto.password);    
@@ -32,7 +30,6 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
-  @HttpCode(HttpStatus.OK)
   @Get('logout')
   logout(@Res() res: Response) {
     res.clearCookie('Authorization');
@@ -41,7 +38,6 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Get('refresh-token')
-  @HttpCode(HttpStatus.OK)
   async refresh(@Request() req: RequestType, @Res({ passthrough: true }) res: Response) {
     const refreshToken = req.cookies['Refresh'];    
     const newTokens = await this.authService.refresh(refreshToken);    
