@@ -14,10 +14,7 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors({
-    origin: ['https://mundi-bellum.onrender.com', 'https://mundi-bellum.lauramathieu.com/', 'https://www.mundi-bellum.lauramathieu.com/', '*'],
-    credentials: true,
-  });
+  app.enableCors();
 
   await app.listen(3007);
 }
