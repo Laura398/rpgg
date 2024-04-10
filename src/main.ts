@@ -15,7 +15,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['https://mundi-bellum.onrender.com', 'https://www.mundi-bellum-server.lauramathieu.com/'],
+    origin: ['https://mundi-bellum.onrender.com', 'https://www.mundi-bellum.lauramathieu.com/'],
     credentials: true,
   });
 
