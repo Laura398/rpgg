@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { RequestType } from 'src/interfaces/types';
@@ -21,19 +21,19 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Res() res: Response, @Body() loginDto: LoginDto) {    
+  async login(@Body() loginDto: LoginDto) {    
     const tokens = await this.authService.login(loginDto.email, loginDto.password);    
-    res.cookie('Authorization', `Bearer ${tokens.accessToken}`, { httpOnly: true }); // set 1month
-    res.cookie('Refresh', tokens.refreshToken, { httpOnly: true});
+    // res.cookie('Authorization', `Bearer ${tokens.accessToken}`, { httpOnly: true }); // set 1month
+    // res.cookie('Refresh', tokens.refreshToken, { httpOnly: true});
     console.info("Loggin : ", tokens);
     return tokens;
   }
 
   @UseGuards(AuthGuard)
   @Get('logout')
-  logout(@Res() res: Response) {
-    res.clearCookie('Authorization');
-    res.clearCookie('Refresh');
+  logout() {
+    // res.clearCookie('Authorization');
+    // res.clearCookie('Refresh');
   }
 
   @UseGuards(AuthGuard)
@@ -41,8 +41,8 @@ export class AuthController {
   async refresh(@Request() req: RequestType, @Res({ passthrough: true }) res: Response) {
     const refreshToken = req.cookies['Refresh'];    
     const newTokens = await this.authService.refresh(refreshToken);    
-    res.cookie('Authorization', `Bearer ${newTokens.accessToken}`, { httpOnly: true });
-    res.cookie('Refresh', newTokens.refreshToken, { httpOnly: true });
+    // res.cookie('Authorization', `Bearer ${newTokens.accessToken}`, { httpOnly: true });
+    // res.cookie('Refresh', newTokens.refreshToken, { httpOnly: true });
     return newTokens;
   }
 
