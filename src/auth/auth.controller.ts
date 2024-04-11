@@ -31,9 +31,9 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Get('logout')
-  logout() {
-    // res.clearCookie('Authorization');
-    // res.clearCookie('Refresh');
+  logout(@Res({passthrough: true}) res: Response,) {
+    res.clearCookie('Authorization');
+    res.clearCookie('Refresh');
   }
 
   @UseGuards(AuthGuard)
@@ -41,8 +41,8 @@ export class AuthController {
   async refresh(@Request() req: RequestType, @Res({ passthrough: true }) res: Response) {
     const refreshToken = req.cookies['Refresh'];    
     const newTokens = await this.authService.refresh(refreshToken);    
-    // res.cookie('Authorization', `Bearer ${newTokens.accessToken}`, { httpOnly: true });
-    // res.cookie('Refresh', newTokens.refreshToken, { httpOnly: true });
+    res.cookie('Authorization', `Bearer ${newTokens.accessToken}`, { httpOnly: true });
+    res.cookie('Refresh', newTokens.refreshToken, { httpOnly: true });
     return newTokens;
   }
 
